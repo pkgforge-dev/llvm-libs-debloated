@@ -1,4 +1,4 @@
-name: build llvm
+name: build & release llvm
 concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
@@ -6,80 +6,121 @@ concurrency:
 on:
   schedule:
     - cron: "0 7 1/14 * *"
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    container: artixlinux/artixlinux:latest
+    name: "Build: ${{ matrix.script }} (${{ matrix.arch }})"
+    permissions:
+      actions: read
+      security-events: write
+      contents: write
+    runs-on: ${{ matrix.runs-on }}
+    continue-on-error: true
+    strategy:
+      matrix:
+        include:
+          - arch: x86_64
+            platform: linux/amd64
+            runs-on: ubuntu-24.04
+            script: llvm-mini
+          - arch: x86_64
+            platform: linux/amd64
+            runs-on: ubuntu-24.04
+            script: llvm-nano
+          - arch: aarch64
+            platform: linux/arm64
+            runs-on: ubuntu-24.04-arm
+            script: llvm-mini
+          - arch: aarch64
+            platform: linux/arm64
+            runs-on: ubuntu-24.04-arm
+            script: llvm-nano
+    container:
+      image: ghcr.io/pkgforge-dev/archlinux:latest
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
-    - name: build
-      run: |
-        sed -i 's/DownloadUser/#DownloadUser/g' /etc/pacman.conf
-        pacman -Syu --noconfirm base-devel strace patchelf curl wget \
-          desktop-file-utils git artix-archlinux-support
-        pacman-key --init && pacman-key --populate archlinux
-        printf "\n[extra]\nInclude = /etc/pacman.d/mirrorlist-arch\n" | tee -a /etc/pacman.conf
-        pacman -Syu --noconfirm \
-          cmake \
-          ninja \
-          zlib \
-          zstd \
-          curl \
-          libffi \
-          libedit \
-          libxml2 \
-          python-setuptools \
-          python-psutil \
-          python-sphinx \
-          python-myst-parser
+      - name: build
+        run: |
+          sed -i 's/DownloadUser/#DownloadUser/g' /etc/pacman.conf
+          pacman -Syu --noconfirm base-devel strace patchelf curl wget \
+            desktop-file-utils git
+          pacman -Syu --noconfirm \
+            cmake \
+            ninja \
+            zlib \
+            zstd \
+            curl \
+            libffi \
+            libedit \
+            libxml2 \
+            python-setuptools \
+            python-psutil \
+            python-sphinx \
+            python-myst-parser
 
-        sudo sed -i -e 's|-O2|-Os|' \
-          -e 's|DEBUG_CFLAGS="-g"|DEBUG_CFLAGS="-g0"|' \
-          -e 's|-fno-omit-frame-pointer|-fomit-frame-pointer|' \
-          -e 's|-mno-omit-leaf-frame-pointer||' \
-          -e 's|-Wp,-D_FORTIFY_SOURCE=3||' \
-          -e 's|-fstack-clash-protection||' \
-          -e 's|MAKEFLAGS=.*|MAKEFLAGS="-j$(nproc)"|' \
-          -e 's|#MAKEFLAGS|MAKEFLAGS|' /etc/makepkg.conf
-        cat /etc/makepkg.conf
+          sudo sed -i -e 's|-O2|-Os|' \
+            -e 's|DEBUG_CFLAGS="-g"|DEBUG_CFLAGS="-g0"|' \
+            -e 's|-fno-omit-frame-pointer|-fomit-frame-pointer|' \
+            -e 's|-mno-omit-leaf-frame-pointer||' \
+            -e 's|-Wp,-D_FORTIFY_SOURCE=3||' \
+            -e 's|-fstack-clash-protection||' \
+            -e 's|MAKEFLAGS=.*|MAKEFLAGS="-j$(nproc)"|' \
+            -e 's|#MAKEFLAGS|MAKEFLAGS|' /etc/makepkg.conf
+          cat /etc/makepkg.conf
 
-        echo "Hacking makepkg to allow building as root in the container..."
-        sudo sed -i 's|EUID == 0|EUID == 69|g' /usr/bin/makepkg
-        mkdir -p /usr/local/bin
-        cp /usr/bin/makepkg /usr/local/bin
+          echo "Hacking makepkg to allow building as root in the container..."
+          sudo sed -i 's|EUID == 0|EUID == 69|g' /usr/bin/makepkg
+          mkdir -p /usr/local/bin
+          cp /usr/bin/makepkg /usr/local/bin
 
-        chmod +x ./*.sh
-        ./llvm-minimal.sh
-        ./llvm-very-minimal.sh
-        mkdir ./dist
-        mv ./llvm-libs-*.pkg.tar.zst ./dist
+          chmod +x ./*.sh
+          sh ${{ matrix.script }}.sh
+          mkdir ./dist
+          mv ./llvm-libs-*.pkg.tar.* ./dist
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: llvm-libs
-        path: 'dist'
-        
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ format('{0}-{1}', matrix.script, matrix.arch) }}
+          path: "dist"
+
   release:
-      needs: [build]
-      permissions: write-all
-      runs-on: ubuntu-latest
+    name: "release"
+    needs: [build]
+    permissions:
+      actions: read
+      security-events: write
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: llvm-mini-aarch64
 
-      steps:
-        - uses: actions/download-artifact@v4
-          with:
-            name: llvm-libs
+      - uses: actions/download-artifact@v4
+        with:
+          name: llvm-nano-aarch64
 
-        - name: release
-          uses: marvinpinto/action-automatic-releases@latest
-          with:
-            title: Continuous build
-            automatic_release_tag: continuous
-            prerelease: false
-            draft: false
-            files: |
-              *.pkg.tar.zst
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: llvm-mini-x86_64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: llvm-nano-x86_64
+
+      - name: release
+        uses: marvinpinto/action-automatic-releases@v1.2.1
+        with:
+          title: Continuous build
+          automatic_release_tag: continuous
+          prerelease: false
+          draft: false
+          files: |
+            *.pkg.tar.zst
+            *.pkg.tar.xz
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
