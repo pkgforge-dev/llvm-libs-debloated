@@ -24,7 +24,7 @@ cd ./qt6-base
 
 # remove the line that enables icu support
 sed -i -e "s/x86_64/${ARCH}/" \
-	's/-DFEATURE_journald=ON/-DFEATURE_journald=OFF/' \
+	-e 's/-DFEATURE_journald=ON/-DFEATURE_journald=OFF/' \
 	-e '/-DFEATURE_libproxy=ON \\/a\    -DFEATURE_icu=OFF \\' ./PKGBUILD
 cat ./PKGBUILD
 
