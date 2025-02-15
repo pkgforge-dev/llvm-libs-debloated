@@ -8,10 +8,11 @@ git clone https://gitlab.archlinux.org/archlinux/packaging/packages/libxml2.git 
 cd ./libxml2
 
 # remove the line that enables icu support
+sed -i '/--with-icu/d' ./PKGBUILD
+
 case "${ARCH}" in
 	"x86_64")
 		EXT="zst"
-		sed -i '/--with-icu/d' ./PKGBUILD
 		;;
 	"aarch64")
 		EXT="xz"
