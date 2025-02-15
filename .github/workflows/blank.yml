@@ -1,4 +1,4 @@
-name: build & release llvm
+name: build & release packages
 concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
