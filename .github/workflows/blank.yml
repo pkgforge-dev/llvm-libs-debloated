@@ -131,6 +131,7 @@ jobs:
           chmod +x ./*.sh
           sh ${{ matrix.script }}.sh
           mkdir ./dist
+          sha256sum ./*.pkg.tar.*
           mv ./*.pkg.tar.* ./dist
 
       - name: Upload artifact
