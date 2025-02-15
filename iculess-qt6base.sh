@@ -26,6 +26,9 @@ cd ./qt6-base
 sed -i -e "s/x86_64/${ARCH}/" \
 	-e 's/-DFEATURE_journald=ON/-DFEATURE_journald=OFF/' \
 	-e '/-DFEATURE_libproxy=ON \\/a\    -DFEATURE_icu=OFF \\' ./PKGBUILD
+if [ "${ARCH}" = "aarch64" ]; then
+	sed -i '/-DFEATURE_no_direct_extern_access=ON/d' ./PKGBUILD
+fi
 cat ./PKGBUILD
 
 makepkg -f --skippgpcheck
