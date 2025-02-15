@@ -36,6 +36,22 @@ jobs:
             platform: linux/arm64
             runs-on: ubuntu-24.04-arm
             script: llvm-nano
+          - arch: x86_64
+            platform: linux/amd64
+            runs-on: ubuntu-24.04
+            script: iculess-libxml2
+          - arch: aarch64
+            platform: linux/arm64
+            runs-on: ubuntu-24.04-arm
+            script: iculess-libxml2
+          - arch: x86_64
+            platform: linux/amd64
+            runs-on: ubuntu-24.04
+            script: iculess-qt6base
+          - arch: aarch64
+            platform: linux/arm64
+            runs-on: ubuntu-24.04-arm
+            script: iculess-qt6base
     container:
       image: ghcr.io/pkgforge-dev/archlinux:latest
     steps:
@@ -46,21 +62,56 @@ jobs:
       - name: build
         run: |
           sed -i 's/DownloadUser/#DownloadUser/g' /etc/pacman.conf
-          pacman -Syu --noconfirm base-devel strace patchelf curl wget \
-            desktop-file-utils git
           pacman -Syu --noconfirm \
+            alsa-lib \
+            base-devel \
             cmake \
-            ninja \
-            zlib \
-            zstd \
+            cups \
             curl \
-            libffi \
+            desktop-file-utils \
+            double-conversion \
+            freetds \
+            git \
+            gst-plugins-base-libs \
+            gtk3 \
+            icu \
+            libb2 \
             libedit \
+            libfbclient \
+            libffi \
+            libice \
+            libinput \
+            libpulse \
+            libsm \
+            libxkbcommon-x11 \
             libxml2 \
-            python-setuptools \
+            mariadb-libs \
+            md4c \
+            mtdev \
+            ncurses \
+            ninja \
+            pacman \
+            patchelf \
+            postgresql \
+            python-myst-parser \
             python-psutil \
+            python-setuptools \
             python-sphinx \
-            python-myst-parser
+            readline \
+            strace \
+            tslib \
+            unixodbc \
+            vulkan-headers \
+            wget \
+            xcb-util-cursor \
+            xcb-util-image \
+            xcb-util-keysyms \
+            xcb-util-renderutil \
+            xcb-util-wm \
+            xdg-utils \
+            xmlstarlet \
+            zlib \
+            zstd
 
           sudo sed -i -e 's|-O2|-Os|' \
             -e 's|DEBUG_CFLAGS="-g"|DEBUG_CFLAGS="-g0"|' \
@@ -80,7 +131,8 @@ jobs:
           chmod +x ./*.sh
           sh ${{ matrix.script }}.sh
           mkdir ./dist
-          mv ./llvm-libs-*.pkg.tar.* ./dist
+          sha256sum ./*.pkg.tar.*
+          mv ./*.pkg.tar.* ./dist
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -112,6 +164,22 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: llvm-nano-x86_64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: iculess-libxml2-aarch64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: iculess-libxml2-x86_64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: iculess-qt6base-aarch64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: iculess-qt6base-x86_64
 
       - name: release
         uses: marvinpinto/action-automatic-releases@v1.2.1
