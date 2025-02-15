@@ -69,17 +69,25 @@ jobs:
             cups \
             curl \
             desktop-file-utils \
+            double-conversion \
             freetds \
             git \
             gst-plugins-base-libs \
             gtk3 \
             icu \
+            libb2 \
             libedit \
             libfbclient \
             libffi \
+            libice \
+            libinput \
             libpulse \
+            libsm \
+            libxkbcommon-x11 \
             libxml2 \
             mariadb-libs \
+            md4c \
+            mtdev \
             ncurses \
             ninja \
             pacman \
@@ -91,8 +99,16 @@ jobs:
             python-sphinx \
             readline \
             strace \
+            tslib \
             unixodbc \
+            vulkan-headers \
             wget \
+            xcb-util-cursor \
+            xcb-util-image \
+            xcb-util-keysyms \
+            xcb-util-renderutil \
+            xcb-util-wm \
+            xdg-utils \
             xmlstarlet \
             zlib \
             zstd
