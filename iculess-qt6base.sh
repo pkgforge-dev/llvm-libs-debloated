@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e
+set -ex
 
 ARCH="$(uname -m)"
 
@@ -30,7 +30,7 @@ cat ./PKGBUILD
 
 makepkg -f --skippgpcheck
 ls -la
-rm -f qt6-base-docs-*.pkg.tar.* qt6-base-debug-*.pkg.tar.*
+rm -fv qt6-base-docs-*.pkg.tar.* qt6-base-debug-*.pkg.tar.*
 mv ./qt6-base-*.pkg.tar.${EXT} ../qt6-base-iculess-${ARCH}.pkg.tar.${EXT}
 cd ..
 rm -rf ./qt6-base
