@@ -6,11 +6,9 @@ ARCH="$(uname -m)"
 
 case "${ARCH}" in
 	"x86_64")
-		TARGETS_TO_BUILD="X86;AMDGPU"
 		EXT="zst"
 		;;
 	"aarch64")
-		TARGETS_TO_BUILD="AArch64;AMDGPU"
 		EXT="xz"
 		;;
 	*)
@@ -29,7 +27,7 @@ cat ./PKGBUILD
 
 makepkg -f --skippgpcheck
 ls -la
-rm -f libxml2-docs-*.pkg.tar.*
+rm -f ./libxml2-docs-*.pkg.tar.* ./libxml2-debug-*-x86_64.pkg.tar.* 
 mv ./libxml2-*.pkg.tar.${EXT} ../libxml2-iculess-${ARCH}.pkg.tar.${EXT}
 cd ..
 rm -rf ./libxml2
