@@ -4,25 +4,24 @@ set -ex
 
 ARCH="$(uname -m)"
 
+git clone https://gitlab.archlinux.org/archlinux/packaging/packages/libxml2.git libxml2
+cd ./libxml2
+
+# remove the line that enables icu support
 case "${ARCH}" in
 	"x86_64")
 		EXT="zst"
+		sed -i '/--with-icu/d' ./PKGBUILD
 		;;
 	"aarch64")
 		EXT="xz"
+		sed -i "s/x86_64/${ARCH}/" ./PKGBUILD
 		;;
 	*)
 		echo "Unsupported Arch: '${ARCH}'"
 		exit 1
 		;;
 esac
-
-git clone https://gitlab.archlinux.org/archlinux/packaging/packages/libxml2.git libxml2
-cd ./libxml2
-
-# remove the line that enables icu support
-#sed -i -e '/--with-icu/d' \
-#	-e "s/x86_64/${ARCH}/" ./PKGBUILD
 cat ./PKGBUILD
 
 makepkg -f --skippgpcheck
