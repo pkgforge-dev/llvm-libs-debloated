@@ -54,7 +54,8 @@ case "${ARCH}" in
 		;;
 	"aarch64")
 		EXT="xz"
-		git clone https://raw.githubusercontent.com/archlinuxarm/PKGBUILDs/refs/heads/master/extra/ffmpeg/PKGBUILD ffmpeg
+		git clone --depth 1 https://github.com/archlinuxarm/PKGBUILDs.git PKGBUILDs
+		mv ./PKGBUILDs/extra/ffmpeg ./
 		cd ./ffmpeg
 		sed -i "s/x86_64/${ARCH}/" ./PKGBUILD
 		;;
