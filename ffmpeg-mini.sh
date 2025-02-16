@@ -2,6 +2,50 @@
 
 set -ex
 
+sudo pacman -S --noconfirm \
+  aom \
+  glslang \
+  gsm \
+  jack \
+  libass \
+  libavc1394 \
+  libbluray \
+  libbs2b \
+  libdvdnav \
+  libdvdread \
+  libiec61883 \
+  libjxl \
+  libmodplug \
+  libopenmpt \
+  libplacebo \
+  libraw1394 \
+  libsoxr \
+  libssh \
+  libtheora \
+  libva \
+  libvdpau \
+  libvpx \
+  libwebp \
+  ocl-icd \
+  onevpl \
+  opencore-amr \
+  rav1e \
+  rubberband \
+  sdl2 \
+  snappy \
+  speex \
+  srt \
+  svt-av1 \
+  v4l-utils \
+  vapoursynth \
+  vid.stab \
+  vmaf \
+  vulkan-icd-loader \
+  x264 \
+  xvidcore \
+  zeromq \
+  zimg
+
 ARCH="$(uname -m)"
 case "${ARCH}" in
 	"x86_64")
