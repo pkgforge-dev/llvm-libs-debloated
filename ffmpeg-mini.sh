@@ -35,11 +35,9 @@ sudo pacman -S --noconfirm \
   snappy \
   speex \
   srt \
-  svt-av1 \
   v4l-utils \
   vapoursynth \
   vid.stab \
-  vmaf \
   vulkan-icd-loader \
   x264 \
   xvidcore \
@@ -50,6 +48,7 @@ ARCH="$(uname -m)"
 case "${ARCH}" in
 	"x86_64")
 		EXT="zst"
+		sudo pacman -S --noconfirm svt-av1 vmaf
 		git clone https://gitlab.archlinux.org/archlinux/packaging/packages/ffmpeg.git ffmpeg
 		cd ./ffmpeg
 		;;
