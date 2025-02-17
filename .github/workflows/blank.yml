@@ -130,6 +130,8 @@ jobs:
             nasm \
             opencl-headers
 
+          export PATH="$PATH:/usr/bin/core_perl"
+
           sudo sed -i -e 's|-O2|-Os|' \
             -e 's|DEBUG_CFLAGS="-g"|DEBUG_CFLAGS="-g0"|' \
             -e 's|-fno-omit-frame-pointer|-fomit-frame-pointer|' \
