@@ -52,6 +52,14 @@ jobs:
             platform: linux/arm64
             runs-on: ubuntu-24.04-arm
             script: iculess-qt6base
+          - arch: x86_64
+            platform: linux/amd64
+            runs-on: ubuntu-24.04
+            script: ffmpeg-mini
+          - arch: aarch64
+            platform: linux/arm64
+            runs-on: ubuntu-24.04-arm
+            script: ffmpeg-mini
     container:
       image: ghcr.io/pkgforge-dev/archlinux:latest
     steps:
@@ -92,6 +100,7 @@ jobs:
             ninja \
             pacman \
             patchelf \
+            perl \
             postgresql \
             python-myst-parser \
             python-psutil \
@@ -111,7 +120,17 @@ jobs:
             xdg-utils \
             xmlstarlet \
             zlib \
-            zstd
+            zstd \
+            amf-headers \
+            avisynthplus \
+            clang \
+            ffnvcodec-headers \
+            frei0r-plugins \
+            ladspa \
+            nasm \
+            opencl-headers
+
+          export PATH="$PATH:/usr/bin/core_perl"
 
           sudo sed -i -e 's|-O2|-Os|' \
             -e 's|DEBUG_CFLAGS="-g"|DEBUG_CFLAGS="-g0"|' \
@@ -180,6 +199,14 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: iculess-qt6base-x86_64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: ffmpeg-mini-aarch64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: ffmpeg-mini-x86_64
 
       - name: release
         uses: marvinpinto/action-automatic-releases@v1.2.1
