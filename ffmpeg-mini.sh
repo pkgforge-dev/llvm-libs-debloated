@@ -75,7 +75,7 @@ cat ./PKGBUILD
 makepkg -f --skippgpcheck
 ls -la
 rm -f ./ffmpeg-docs-*.pkg.tar.* ./ffmpeg-debug-*.pkg.tar.*
-mv ./ffmpeg-*.pkg.tar.${EXT} ../ffmpeg-x265less-${ARCH}.pkg.tar.${EXT}
+mv ./ffmpeg-*.pkg.tar.${EXT} ../ffmpeg-mini-${ARCH}.pkg.tar.${EXT}
 cd ..
 rm -rf ./ffmpeg
 echo "All done!"
