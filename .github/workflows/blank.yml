@@ -16,7 +16,7 @@ jobs:
       security-events: write
       contents: write
     runs-on: ${{ matrix.runs-on }}
-    continue-on-error: true
+    continue-on-error: false
     strategy:
       matrix:
         include:
