@@ -10,7 +10,7 @@ _build_libxml2() (
 	cd ./libxml2
 
 	# remove the line that enables icu support
-	# sed -i '/--with-icu/d' ./PKGBUILD
+	sed -i '/--with-icu/d' ./PKGBUILD
 	# They switched to meson, so we will remove the lib directly
 	sudo pacman -S --noconfirm meson
 	sudo pacman -Rsndd --noconfirm icu
