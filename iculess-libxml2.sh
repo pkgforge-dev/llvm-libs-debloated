@@ -8,12 +8,12 @@ _build_libxml2() (
 	rm -rf ./libxml2 || true
 	git clone https://gitlab.archlinux.org/archlinux/packaging/packages/libxml2.git libxml2
 	cd ./libxml2
+	
+	# They switched to meson, so we will build the very last commit before that TODO FIX
+	git reset --hard 7bc1d289ed0bc1cf7c63c8b9f109b13cb3523785    
 
 	# remove the line that enables icu support
 	sed -i '/--with-icu/d' ./PKGBUILD
-	# They switched to meson, so we will remove the lib directly
-	sudo pacman -S --noconfirm meson
-	sudo pacman -Rsndd --noconfirm icu
 
 	case "${ARCH}" in
 		"x86_64")
