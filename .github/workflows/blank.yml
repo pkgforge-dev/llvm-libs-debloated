@@ -95,7 +95,6 @@ jobs:
             libxml2 \
             mariadb-libs \
             md4c \
-            meson \
             mtdev \
             ncurses \
             ninja \
