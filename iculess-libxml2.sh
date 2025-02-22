@@ -12,7 +12,8 @@ _build_libxml2() (
 	# remove the line that enables icu support
 	# sed -i '/--with-icu/d' ./PKGBUILD
 	# They switched to meson, so we will remove the lib directly
-	sudo pacman --noconfirm -Rsndd icu
+	sudo pacman -S --noconfirm meson
+	sudo pacman -Rsndd --noconfirm icu
 
 	case "${ARCH}" in
 		"x86_64")
