@@ -60,6 +60,14 @@ jobs:
             platform: linux/arm64
             runs-on: ubuntu-24.04-arm
             script: ffmpeg-mini
+          - arch: x86_64
+            platform: linux/amd64
+            runs-on: ubuntu-24.04
+            script: opus-nano
+          - arch: aarch64
+            platform: linux/arm64
+            runs-on: ubuntu-24.04-arm
+            script: opus-nano
     container:
       image: ghcr.io/pkgforge-dev/archlinux:latest
     steps:
@@ -207,6 +215,14 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: ffmpeg-mini-x86_64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: opus-nano-aarch64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: opus-nano-x86_64
 
       - name: release
         uses: marvinpinto/action-automatic-releases@v1.2.1
