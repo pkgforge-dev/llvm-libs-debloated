@@ -59,6 +59,7 @@ case "${ARCH}" in
 		;;
 	"aarch64")
 		EXT="xz"
+		pacman -S --noconfirm python-pycparser
 		git clone https://github.com/archlinuxarm/PKGBUILDs ./mesa
 		cd ./mesa
 		mv -v ./extra/mesa/* ./extra/mesa/.* ./
