@@ -91,9 +91,9 @@ mv -v ./vulkan-nouveau-*.pkg.tar.${EXT} ../vulkan-nouveau-mini-${ARCH}.pkg.tar.$
 if [ "$ARCH" = 'x86_64' ]; then
 	mv -v ./vulkan-intel-*.pkg.tar.${EXT} ../vulkan-intel-mini-${ARCH}.pkg.tar.${EXT}
 else
-	mv -v ./vulkan-broadcom  ../vulkan-broadcom-mini-${ARCH}.pkg.tar.${EXT}
-	mv -v ./vulkan-panfrost  ../vulkan-panfrost-mini-${ARCH}.pkg.tar.${EXT}
-	mv -v ./vulkan-freedreno ../vulkan-freedreno-mini-${ARCH}.pkg.tar.${EXT}
+	mv -v ./vulkan-broadcom-*.pkg.tar.${EXT}  ../vulkan-broadcom-mini-${ARCH}.pkg.tar.${EXT}
+	mv -v ./vulkan-panfrost-*.pkg.tar.${EXT}  ../vulkan-panfrost-mini-${ARCH}.pkg.tar.${EXT}
+	mv -v ./vulkan-freedreno-*.pkg.tar.${EXT} ../vulkan-freedreno-mini-${ARCH}.pkg.tar.${EXT}
 fi
 cd ..
 rm -rf ./mesa
