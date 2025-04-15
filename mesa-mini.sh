@@ -51,8 +51,6 @@ pacman -S --noconfirm \
 	python-sphinx \
 	python-sphinx-hawkmoth
 
-
-# debloat mesa
 case "${ARCH}" in
 	"x86_64")
 		EXT="zst"
@@ -71,6 +69,9 @@ case "${ARCH}" in
 		;;
 esac
 
+sed -i -e "s/x86_64/${ARCH}/" ./PKGBUILD
+
+# debloat mesa
 sed -i -e 's/r300,//' \
 	-e 's/svga,//' \
 	-e 's/softpipe,//' \
