@@ -4,7 +4,7 @@ set -ex
 
 ARCH="$(uname -m)"
 
-echo -S --noconfirm \
+pacman -S --noconfirm \
 	clang \
 	directx-headers \
 	expat \
