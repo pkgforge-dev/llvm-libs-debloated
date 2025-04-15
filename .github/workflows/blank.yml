@@ -68,6 +68,14 @@ jobs:
             platform: linux/arm64
             runs-on: ubuntu-24.04-arm
             script: opus-nano
+          - arch: x86_64
+            platform: linux/amd64
+            runs-on: ubuntu-24.04
+            script: mesa-mini
+          - arch: aarch64
+            platform: linux/arm64
+            runs-on: ubuntu-24.04-arm
+            script: mesa-mini
     container:
       image: ghcr.io/pkgforge-dev/archlinux:latest
     steps:
@@ -223,6 +231,14 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: opus-nano-x86_64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: mesa-mini-aarch64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: mesa-mini-x86_64
 
       - name: release
         uses: marvinpinto/action-automatic-releases@v1.2.1
