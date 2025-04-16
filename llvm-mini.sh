@@ -29,10 +29,11 @@ sed -i -e 's/-g1/-g0/' \
 	-e 's|-DLLVM_ENABLE_CURL=ON|-DLLVM_ENABLE_CURL=OFF|' \
 	-e 's|-DLLVM_ENABLE_SPHINX=ON|-DLLVM_ENABLE_SPHINX=OFF|' \
 	-e 's|rm -r|#rm -r|' ./PKGBUILD
-cat ./PKGBUILD
 
 # disable test
 sed -i -e 's|LD_LIBRARY_PATH|#LD_LIBRARY_PATH|' ./PKGBUILD
+
+cat ./PKGBUILD
 
 makepkg -f --skippgpcheck
 ls -la
