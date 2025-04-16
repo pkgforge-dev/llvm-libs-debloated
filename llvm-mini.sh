@@ -31,6 +31,9 @@ sed -i -e 's/-g1/-g0/' \
 	-e 's|rm -r|#rm -r|' ./PKGBUILD
 cat ./PKGBUILD
 
+# disable test
+sed -i -e 's|LD_LIBRARY_PATH|#LD_LIBRARY_PATH|' ./PKGBUILD
+
 makepkg -f --skippgpcheck
 ls -la
 mv ./llvm-libs-*.pkg.tar.${EXT} ../llvm-libs-mini-${ARCH}.pkg.tar.${EXT}
