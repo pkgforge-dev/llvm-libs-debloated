@@ -20,6 +20,8 @@ This repo makes modified versiones of some Archlinux packages, these are intende
 
 * [goverlay](https://github.com/benjamimgois/goverlay)
 
+* [Steam-appimage](https://github.com/ivan-hc/Steam-appimage)
+
 * [interstellar](https://github.com/interstellar-app/interstellar)
 
 * [QDiskInfo](https://github.com/edisionnano/QDiskInfo)
