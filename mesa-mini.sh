@@ -63,6 +63,9 @@ case "${ARCH}" in
 		git clone https://github.com/archlinuxarm/PKGBUILDs ./mesa
 		cd ./mesa
 		mv -v ./extra/mesa/* ./extra/mesa/.* ./
+
+		# FIX THIS WHOLE MESS
+		sed -i 's|https://mesa.freedesktop.org/archive/mesa|https://archive.mesa3d.org/mesa|' ./PKGBUILD
 		;;
 	*)
 		echo "Unsupported Arch: '${ARCH}'"
