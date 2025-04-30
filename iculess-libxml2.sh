@@ -4,6 +4,8 @@ set -x
 
 ARCH="$(uname -m)"
 
+sudo pacman -S --noconfirm meson
+
 _build_libxml2() (
 	rm -rf ./libxml2 || true
 	git clone https://gitlab.archlinux.org/archlinux/packaging/packages/libxml2.git libxml2
