@@ -11,15 +11,13 @@ _build_libxml2() (
 	git clone https://gitlab.archlinux.org/archlinux/packaging/packages/libxml2.git libxml2
 	cd ./libxml2
 
-	# remove the line that enables icu support
-	sed -i -e 's/icu=enabled/icu=disabled/' \
-		-e '/--with-icu/d' ./PKGBUILD
-
 	case "${ARCH}" in
 		"x86_64")
 			EXT="zst"
 			;;
 		"aarch64")
+			# TODO remove once archlinuxarm catches up with archlinux
+			git reset --hard 7bc1d289ed0bc1cf7c63c8b9f109b13cb3523785
 			EXT="xz"
 			sed -i "s/x86_64/${ARCH}/" ./PKGBUILD
 			;;
@@ -28,6 +26,11 @@ _build_libxml2() (
 			exit 1
 			;;
 	esac
+
+	# remove the line that enables icu support
+	sed -i -e 's/icu=enabled/icu=disabled/' \
+		-e '/--with-icu/d' ./PKGBUILD
+
 	cat ./PKGBUILD
 
 	makepkg -f --skippgpcheck || return 1
