@@ -16,8 +16,6 @@ _build_libxml2() (
 			EXT="zst"
 			;;
 		"aarch64")
-			# TODO remove once archlinuxarm catches up with archlinux
-			git reset --hard 7bc1d289ed0bc1cf7c63c8b9f109b13cb3523785
 			EXT="xz"
 			sed -i "s/x86_64/${ARCH}/" ./PKGBUILD
 			;;
