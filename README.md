@@ -25,3 +25,7 @@ This repo makes modified versiones of some Archlinux packages, these are intende
 * [interstellar](https://github.com/interstellar-app/interstellar)
 
 * [QDiskInfo](https://github.com/edisionnano/QDiskInfo)
+
+* [mangojuice](https://github.com/radiolamp/mangojuice)
+
+* [CPU-X](https://github.com/TheTumultuousUnicornOfDarkness/CPU-X)
