@@ -50,7 +50,7 @@ cat ./PKGBUILD
 makepkg -f --skippgpcheck
 ls -la
 rm -fv mangohud-docs-*.pkg.tar.* mangohud-debug-*.pkg.tar.*
-mv ./mangohud-*.pkg.tar.${EXT} ../mangohud-iculess-${ARCH}.pkg.tar.${EXT}
+mv ./mangohud-*.pkg.tar.${EXT} ../mangohud-pythonless-${ARCH}.pkg.tar.${EXT}
 cd ..
 rm -rf ./mangohud
 echo "All done!"
