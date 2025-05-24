@@ -67,7 +67,6 @@ esac
 
 # remove x265 support and AV1 encoding support
 sed -i -e '/x265/d' \
-	-e '/libv4l2/d' \
 	-e '/librav1e/d' \
 	-e 's/--enable-libsvtav1/--enable-small/' \
 	-e '/--enable-vapoursynth/d' ./PKGBUILD
