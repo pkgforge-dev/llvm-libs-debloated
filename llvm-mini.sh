@@ -22,6 +22,8 @@ esac
 git clone https://gitlab.archlinux.org/archlinux/packaging/packages/llvm llvm
 cd ./llvm
 
+git reset --hard 67e79f20d574b125bd6e6ad9231fbcd50803deec
+
 sed -i -e 's/-g1/-g0/' \
 	-e '/llvm19-libs/d' \
 	-e "s/x86_64/${ARCH}/" \
