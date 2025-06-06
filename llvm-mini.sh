@@ -4,6 +4,9 @@ set -e
 
 ARCH="$(uname -m)"
 
+git clone https://gitlab.archlinux.org/archlinux/packaging/packages/llvm llvm
+cd ./llvm
+
 case "${ARCH}" in
 "x86_64")
 	TARGETS_TO_BUILD="X86;AMDGPU"
@@ -12,6 +15,7 @@ case "${ARCH}" in
 "aarch64")
 	TARGETS_TO_BUILD="AArch64;AMDGPU"
 	EXT="xz"
+	git reset --hard 67e79f20d574b125bd6e6ad9231fbcd50803deec # REMOVE ME once archlinuxarm catches up
 	;;
 *)
 	echo "Unsupported Arch: '${ARCH}'"
@@ -19,13 +23,7 @@ case "${ARCH}" in
 	;;
 esac
 
-git clone https://gitlab.archlinux.org/archlinux/packaging/packages/llvm llvm
-cd ./llvm
-
-git reset --hard 67e79f20d574b125bd6e6ad9231fbcd50803deec
-
 sed -i -e 's/-g1/-g0/' \
-	-e '/llvm19-libs/d' \
 	-e "s/x86_64/${ARCH}/" \
 	-e 's|-DCMAKE_BUILD_TYPE=Release|-DCMAKE_BUILD_TYPE=MinSizeRel|' \
 	-e 's|-DLLVM_BUILD_TESTS=ON|-DLLVM_BUILD_TESTS=OFF -DLLVM_ENABLE_ASSERTIONS=OFF|' \
