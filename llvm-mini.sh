@@ -15,7 +15,6 @@ case "${ARCH}" in
 "aarch64")
 	TARGETS_TO_BUILD="AArch64;AMDGPU"
 	EXT="xz"
-	git reset --hard 67e79f20d574b125bd6e6ad9231fbcd50803deec # REMOVE ME once archlinuxarm catches up
 	;;
 *)
 	echo "Unsupported Arch: '${ARCH}'"
