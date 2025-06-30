@@ -18,6 +18,7 @@ jobs:
     runs-on: ${{ matrix.runs-on }}
     continue-on-error: false
     strategy:
+      fail-fast: false
       matrix:
         include:
           - arch: x86_64
