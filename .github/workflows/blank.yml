@@ -185,8 +185,10 @@ jobs:
           mkdir -p /usr/local/bin
           cp /usr/bin/makepkg /usr/local/bin
 
-          export CC="ccache gcc"
-          export CXX="ccache g++"
+          export CC=gcc
+          export CXX=g++
+          export CMAKE_C_COMPILER_LAUNCHER=ccache
+          export CMAKE_CXX_COMPILER_LAUNCHER=ccache
           chmod +x ./*.sh
           sh ${{ matrix.script }}.sh
           ccache -s -v
