@@ -91,18 +91,24 @@ jobs:
       CCACHE_DIR: ${{ github.workspace }}/.ccache
       CCACHE_COMPILERCHECK: content
       CCACHE_SLOPPINESS: time_macros
+      SCCACHE_GHA_ENABLED: "true"
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
           
       - name: set up ccache
+        if: ${{ matrix.script != 'iculess-qt6base' }}
         uses: actions/cache@v4
         with:
           path: ${{ env.CCACHE_DIR }}
           key: ${{ runner.os }}-ccache-${{ matrix.script }}-${{ matrix.arch }}-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-ccache-${{ matrix.script }}-${{ matrix.arch }}-
+            
+      - name: set up sccache
+        if: ${{ matrix.script == 'iculess-qt6base' }}
+        uses: mozilla-actions/sccache-action@v0.0.9
             
       - name: build
         run: |
@@ -188,11 +194,22 @@ jobs:
 
           export CC=gcc
           export CXX=g++
-          export CMAKE_C_COMPILER_LAUNCHER=ccache
-          export CMAKE_CXX_COMPILER_LAUNCHER=ccache
+          if [ "${{ matrix.script }}" != 'iculess-qt6base' ]; then
+            export CMAKE_C_COMPILER_LAUNCHER=ccache
+            export CMAKE_CXX_COMPILER_LAUNCHER=ccache
+          else
+            export CMAKE_C_COMPILER_LAUNCHER=sccache
+            export CMAKE_CXX_COMPILER_LAUNCHER=sccache
+          fi
+          
           chmod +x ./*.sh
           sh ${{ matrix.script }}.sh
-          ccache -s -v
+          
+          if [ "${{ matrix.script }}" != 'iculess-qt6base' ]; then
+            ccache -s -v
+          else
+            sccache --show-stats
+          fi
 
           mkdir ./dist
           sha256sum ./*.pkg.tar.*
