@@ -18,6 +18,7 @@ jobs:
     runs-on: ${{ matrix.runs-on }}
     continue-on-error: false
     strategy:
+      fail-fast: false
       matrix:
         include:
           - arch: x86_64
@@ -86,11 +87,23 @@ jobs:
             script: mangohud-pythonless
     container:
       image: ghcr.io/pkgforge-dev/archlinux:latest
+    env:
+      CCACHE_DIR: ${{ github.workspace }}/.ccache
+      CCACHE_COMPILERCHECK: content
+      CCACHE_SLOPPINESS: time_macros
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-
+          
+      - name: set up ccache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CCACHE_DIR }}
+          key: ${{ runner.os }}-ccache-${{ matrix.script }}-${{ matrix.arch }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-ccache-${{ matrix.script }}-${{ matrix.arch }}-
+            
       - name: build
         run: |
           sed -i 's/DownloadUser/#DownloadUser/g' /etc/pacman.conf
@@ -98,6 +111,7 @@ jobs:
             alsa-lib \
             base-devel \
             cmake \
+            ccache \
             cups \
             curl \
             desktop-file-utils \
@@ -163,6 +177,7 @@ jobs:
             -e 's|-Wp,-D_FORTIFY_SOURCE=3||' \
             -e 's|-fstack-clash-protection||' \
             -e 's|MAKEFLAGS=.*|MAKEFLAGS="-j$(nproc)"|' \
+            -e 's|!ccache|ccache|' \
             -e 's|#MAKEFLAGS|MAKEFLAGS|' /etc/makepkg.conf
           cat /etc/makepkg.conf
 
@@ -171,8 +186,14 @@ jobs:
           mkdir -p /usr/local/bin
           cp /usr/bin/makepkg /usr/local/bin
 
+          export CC=gcc
+          export CXX=g++
+          export CMAKE_C_COMPILER_LAUNCHER=ccache
+          export CMAKE_CXX_COMPILER_LAUNCHER=ccache
           chmod +x ./*.sh
           sh ${{ matrix.script }}.sh
+          ccache -s -v
+
           mkdir ./dist
           sha256sum ./*.pkg.tar.*
           mv ./*.pkg.tar.* ./dist
