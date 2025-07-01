@@ -9,7 +9,7 @@ cd ./qt6-base
 
 # remove the line that enables icu support
 sed -i -e "s/x86_64/${ARCH}/" \
-	-e 's/-DCMAKE_BUILD_TYPE=RelWithDebInfo/-DCMAKE_BUILD_TYPE=MinSizeRel/' \
+	-e 's/-DCMAKE_BUILD_TYPE=RelWithDebInfo/-DCMAKE_BUILD_TYPE=MinSizeRel -DQT_FEATURE_optimize_size=ON -DQT_FEATURE_libstdcpp_assertions=OFF/' \
 	-e 's/-DFEATURE_journald=ON/-DFEATURE_journald=OFF/' \
 	-e '/-DFEATURE_libproxy=ON \\/a\    -DFEATURE_icu=OFF \\' ./PKGBUILD
 
