@@ -85,6 +85,10 @@ jobs:
             platform: linux/arm64
             runs-on: ubuntu-24.04-arm
             script: mangohud-pythonless
+          - arch: x86_64
+            platform: linux/amd64
+            runs-on: ubuntu-24.04
+            script: intel-media-mini
     container:
       image: ghcr.io/pkgforge-dev/archlinux:latest
     env:
@@ -294,6 +298,10 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: mangohud-pythonless-x86_64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: intel-media-mini-x86_64
 
       - name: release
         uses: marvinpinto/action-automatic-releases@v1.2.1
