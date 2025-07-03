@@ -10,7 +10,7 @@ git clone https://gitlab.archlinux.org/archlinux/packaging/packages/intel-media-
 cd ./intel-media-driver
 
 # Build with MinSizeRel for smaller lib
-sed -i -e 's|-DINSTALL_DRIVER_SYSCONF=OFF|-DINSTALL_DRIVER_SYSCONF=OFF -DBUILD_TYPE=MinSizeRel|' ./PKGBUILD
+sed -i -e 's|-DINSTALL_DRIVER_SYSCONF=OFF|-DINSTALL_DRIVER_SYSCONF=OFF -DBUILD_TYPE=MinSizeRel -DENABLE_NONFREE_KERNELS=OFF|' ./PKGBUILD
 
 case "${ARCH}" in
 	"x86_64")
