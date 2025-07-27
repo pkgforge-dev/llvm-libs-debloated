@@ -31,3 +31,5 @@ This repo makes modified versiones of some Archlinux packages, these are intende
 * [CPU-X](https://github.com/TheTumultuousUnicornOfDarkness/CPU-X)
 
 * [ppsspp](https://github.com/hrydgard/ppsspp)
+
+* [Eden](https://github.com/eden-emulator/Releases)
