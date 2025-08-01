@@ -4,9 +4,6 @@ set -ex
 
 ARCH="$(uname -m)"
 
-unset CMAKE_C_COMPILER_LAUNCHER
-unset CMAKE_CXX_COMPILER_LAUNCHER
-
 sudo pacman -S --noconfirm intel-gmmlib libva
 
 git clone https://gitlab.archlinux.org/archlinux/packaging/packages/intel-media-driver.git ./intel-media-driver
