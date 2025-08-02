@@ -95,7 +95,6 @@ jobs:
       CCACHE_DIR: ${{ github.workspace }}/.ccache
       CCACHE_COMPILERCHECK: content
       CCACHE_SLOPPINESS: time_macros
-      SCCACHE_GHA_ENABLED: "true"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -112,7 +111,12 @@ jobs:
             
       - name: set up sccache
         if: ${{ matrix.script == 'iculess-qt6base' }}
-        uses: mozilla-actions/sccache-action@v0.0.9
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/sccache/
+          key: ${{ runner.os }}-sccache-${{ matrix.script }}-${{ matrix.arch }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-sccache-${{ matrix.script }}-${{ matrix.arch }}-
             
       - name: build
         run: |
@@ -156,6 +160,7 @@ jobs:
             python-sphinx \
             readline \
             strace \
+            sccache \
             tslib \
             unixodbc \
             vulkan-headers \
