@@ -76,10 +76,11 @@ esac
 sed -i -e "s/x86_64/${ARCH}/" ./PKGBUILD
 
 # debloat mesa
-sed -i -e 's/r300,//' \
-	-e 's/svga,//' \
+sed -i -e 's/r300,//'  \
+	-e 's/svga,//'     \
 	-e 's/softpipe,//' \
-	-e 's/gallium-nine=true/gallium-nine=false/' \
+	-e '/sysprof/d'    \
+	-e '/valgrind/d'   \
 	-e 's/-g1/-g0 -Os/g' ./PKGBUILD
 
 cat ./PKGBUILD
