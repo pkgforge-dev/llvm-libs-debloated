@@ -4,53 +4,6 @@ set -ex
 
 ARCH="$(uname -m)"
 
-pacman -S --noconfirm \
-	clang \
-	directx-headers \
-	expat \
-	gcc-libs \
-	glibc \
-	libdrm \
-	libelf \
-	libglvnd \
-	libpng \
-	libva \
-	libvdpau \
-	libx11 \
-	libxcb \
-	libxext \
-	libxml2 \
-	libxrandr \
-	libxshmfence \
-	libxxf86vm \
-	llvm \
-	llvm-libs \
-	lm_sensors \
-	rust \
-	spirv-llvm-translator \
-	spirv-tools \
-	systemd-libs \
-	vulkan-icd-loader \
-	wayland \
-	xcb-util-keysyms \
-	cbindgen \
-	clang \
-	cmake \
-	elfutils \
-	glslang \
-	libclc \
-	meson \
-	python-mako \
-	python-packaging \
-	python-ply \
-	python-yaml \
-	rust-bindgen \
-	wayland-protocols \
-	xorgproto \
-	valgrind \
-	python-sphinx \
-	python-sphinx-hawkmoth
-
 case "${ARCH}" in
 	"x86_64")
 		EXT="zst"
@@ -59,7 +12,6 @@ case "${ARCH}" in
 		;;
 	"aarch64")
 		EXT="xz"
-		pacman -S --noconfirm python-pycparser
 		git clone https://github.com/archlinuxarm/PKGBUILDs ./mesa
 		cd ./mesa
 		mv -v ./extra/mesa/* ./extra/mesa/.* ./
@@ -80,12 +32,12 @@ sed -i -e 's/r300,//'  \
 	-e 's/svga,//'     \
 	-e 's/softpipe,//' \
 	-e '/sysprof/d'    \
-	-e '/valgrind/d'   \
+	-e 's/valgrind=enabled/valgrind=disabled/'   \
 	-e 's/-g1/-g0 -Os/g' ./PKGBUILD
 
 cat ./PKGBUILD
 
-makepkg -f --skippgpcheck
+makepkg -fs --noconfirm --skippgpcheck
 ls -la
 rm -fv *-docs-*.pkg.tar.* *-debug-*.pkg.tar.*
 mv -v ./mesa-*.pkg.tar.${EXT}           ../mesa-mini-${ARCH}.pkg.tar.${EXT}

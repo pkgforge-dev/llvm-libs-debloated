@@ -4,20 +4,6 @@ set -ex
 
 ARCH="$(uname -m)"
 
-pacman -S --noconfirm \
-	appstream \
-	cmocka \
-	glew \
-	glfw \
-	glslang \
-	hicolor-icon-theme \
-	libxkbcommon \
-	libxrandr \
-	meson \
-	nlohmann-json \
-	python-mako \
-	vulkan-headers
-
 git clone https://github.com/VHSgunzo/mangohud-PKGBUILD.git ./mangohud-temp
 mv -v ./mangohud-temp/mangohud ./
 rm -rf ./mangohud-temp
@@ -29,7 +15,6 @@ sed -i -e "s|x86_64|$(uname -m)|" ./PKGBUILD
 case "${ARCH}" in
 	"x86_64")
 		EXT="zst"
-		pacman -S --noconfirm libxnvctrl
 		;;
 	"aarch64")
 		EXT="xz"
@@ -47,7 +32,7 @@ esac
 
 cat ./PKGBUILD
 
-makepkg -f --skippgpcheck
+makepkg -fs --noconfirm --skippgpcheck
 ls -la
 rm -fv mangohud-docs-*.pkg.tar.* mangohud-debug-*.pkg.tar.*
 mv ./mangohud-*.pkg.tar.${EXT} ../mangohud-pythonless-${ARCH}.pkg.tar.${EXT}
