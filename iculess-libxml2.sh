@@ -4,8 +4,6 @@ set -x
 
 ARCH="$(uname -m)"
 
-sudo pacman -S --noconfirm meson
-
 _build_libxml2() (
 	rm -rf ./libxml2 || true
 	git clone https://gitlab.archlinux.org/archlinux/packaging/packages/libxml2.git libxml2
@@ -31,7 +29,7 @@ _build_libxml2() (
 
 	cat ./PKGBUILD
 
-	makepkg -f --skippgpcheck || return 1
+	makepkg -fs --noconfirm --skippgpcheck || return 1
 	ls -la
 	rm -f ./libxml2-docs-*.pkg.tar.* ./libxml2-debug-*-x86_64.pkg.tar.*
 	mv ./libxml2-*.pkg.tar.${EXT} ../libxml2-iculess-${ARCH}.pkg.tar.${EXT} || return 1

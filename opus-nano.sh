@@ -4,8 +4,6 @@ set -ex
 
 ARCH="$(uname -m)"
 
-sudo pacman -S --noconfirm doxygen meson
-
 git clone https://gitlab.archlinux.org/archlinux/packaging/packages/opus.git ./opus
 cd ./opus
 
@@ -33,7 +31,7 @@ esac
 
 cat ./PKGBUILD
 
-makepkg -f --skippgpcheck
+makepkg -fs --noconfirm --skippgpcheck
 ls -la
 rm -fv *-docs-*.pkg.tar.* *-debug-*.pkg.tar.*
 mv ./opus-*.pkg.tar.${EXT} ../opus-nano-${ARCH}.pkg.tar.${EXT}

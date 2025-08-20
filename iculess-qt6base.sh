@@ -29,7 +29,7 @@ esac
 
 cat ./PKGBUILD
 
-makepkg -f --skippgpcheck
+makepkg -fs --noconfirm --skippgpcheck
 ls -la
 rm -fv qt6-base-docs-*.pkg.tar.* qt6-base-debug-*.pkg.tar.*
 mv ./qt6-base-*.pkg.tar.${EXT} ../qt6-base-iculess-${ARCH}.pkg.tar.${EXT}

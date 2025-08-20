@@ -4,8 +4,6 @@ set -ex
 
 ARCH="$(uname -m)"
 
-sudo pacman -S --noconfirm intel-gmmlib libva
-
 git clone https://gitlab.archlinux.org/archlinux/packaging/packages/intel-media-driver.git ./intel-media-driver
 cd ./intel-media-driver
 
@@ -24,7 +22,7 @@ esac
 
 cat ./PKGBUILD
 
-makepkg -f --skippgpcheck
+makepkg -fs --noconfirm --skippgpcheck
 ls -la
 rm -fv *-docs-*.pkg.tar.* *-debug-*.pkg.tar.*
 mv ./intel-*.pkg.tar.${EXT} ../intel-media-mini-${ARCH}.pkg.tar.${EXT}

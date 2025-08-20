@@ -36,7 +36,7 @@ sed -i -e 's|LD_LIBRARY_PATH|#LD_LIBRARY_PATH|' ./PKGBUILD
 
 cat ./PKGBUILD
 
-makepkg -f --skippgpcheck
+makepkg -fs --noconfirm --skippgpcheck
 ls -la
 mv ./llvm-libs-*.pkg.tar.${EXT} ../llvm-libs-nano-${ARCH}.pkg.tar.${EXT}
 cd ..
