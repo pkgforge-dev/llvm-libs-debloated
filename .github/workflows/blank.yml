@@ -122,66 +122,14 @@ jobs:
         run: |
           sed -i 's/DownloadUser/#DownloadUser/g' /etc/pacman.conf
           pacman -Syu --noconfirm \
-            alsa-lib \
             base-devel \
-            cmake \
-            ccache \
-            cups \
-            curl \
-            desktop-file-utils \
-            double-conversion \
-            freetds \
-            git \
-            gst-plugins-base-libs \
-            gtk3 \
-            icu \
-            libb2 \
-            libedit \
-            libfbclient \
-            libffi \
-            libice \
-            libinput \
-            libpulse \
-            libsm \
-            libxkbcommon-x11 \
-            libxml2 \
-            mariadb-libs \
-            md4c \
-            mtdev \
-            ncurses \
-            ninja \
-            pacman \
-            patchelf \
-            perl \
-            postgresql \
-            python-myst-parser \
-            python-psutil \
-            python-setuptools \
-            python-sphinx \
-            readline \
-            strace \
-            sccache \
-            tslib \
-            unixodbc \
-            vulkan-headers \
-            wget \
-            xcb-util-cursor \
-            xcb-util-image \
-            xcb-util-keysyms \
-            xcb-util-renderutil \
-            xcb-util-wm \
-            xdg-utils \
-            xmlstarlet \
-            zlib \
-            zstd \
-            amf-headers \
-            avisynthplus \
-            clang \
-            ffnvcodec-headers \
-            frei0r-plugins \
-            ladspa \
-            nasm \
-            opencl-headers
+            ccache     \
+            clang      \
+            cmake      \
+            curl       \
+            ninja      \
+            sccache    \
+            wget
 
           export PATH="$PATH:/usr/bin/core_perl"
 
