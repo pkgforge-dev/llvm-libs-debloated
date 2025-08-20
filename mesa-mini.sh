@@ -32,7 +32,7 @@ sed -i -e 's/r300,//'  \
 	-e 's/svga,//'     \
 	-e 's/softpipe,//' \
 	-e '/sysprof/d'    \
-	-e '/valgrind/d'   \
+	-e 's/valgrind=enabled/valgrind=disabled/'   \
 	-e 's/-g1/-g0 -Os/g' ./PKGBUILD
 
 cat ./PKGBUILD
