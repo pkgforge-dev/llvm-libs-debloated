@@ -127,6 +127,7 @@ jobs:
             clang      \
             cmake      \
             curl       \
+            git        \
             ninja      \
             sccache    \
             wget
