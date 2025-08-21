@@ -4,6 +4,8 @@ set -ex
 
 ARCH="$(uname -m)"
 
+sed -i -e 's|-O2|-Oz|' /etc/makepkg.conf
+
 case "${ARCH}" in
 	"x86_64")
 		EXT="zst"
