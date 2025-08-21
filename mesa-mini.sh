@@ -28,11 +28,18 @@ esac
 sed -i -e "s/x86_64/${ARCH}/" ./PKGBUILD
 
 # debloat mesa
-sed -i -e 's/r300,//'  \
-	-e 's/svga,//'     \
-	-e 's/softpipe,//' \
-	-e '/sysprof/d'    \
-	-e 's/valgrind=enabled/valgrind=disabled/'   \
+sed -i -e 's/r300,//'      \
+	-e 's/svga,//'         \
+	-e 's/softpipe,//'     \
+	-e 's/llvmpipe,//'     \
+	-e 's/swrast//'        \
+	-e '/sysprof/d'        \
+	-e '/_pick vkswrast/d' \
+	-e '/_pick opencl/d'   \
+	-e 's/intel-rt=enabled/intel-rt=disabled/'         \
+	-e 's/gallium-rusticl=true/gallium-rusticl=false/' \
+	-e 's/valgrind=enabled/valgrind=disabled/'         \
+	-e 's/-D video-codecs=all/-D video-codecs=all -D amd-use-llvm=false -D draw-use-llvm=false/'
 	-e 's/-g1/-g0 -Os/g' ./PKGBUILD
 
 cat ./PKGBUILD
