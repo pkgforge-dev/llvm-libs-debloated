@@ -32,7 +32,7 @@ sed -i -e 's/r300,//'      \
 	-e 's/svga,//'         \
 	-e 's/softpipe,//'     \
 	-e 's/llvmpipe,//'     \
-	-e 's/swrast//'        \
+	-e 's/swrast,//'       \
 	-e '/sysprof/d'        \
 	-e '/_pick vkswrast/d' \
 	-e '/_pick opencl/d'   \
