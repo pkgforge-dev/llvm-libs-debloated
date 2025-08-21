@@ -29,6 +29,7 @@ sed -i -e "s/x86_64/${ARCH}/" ./PKGBUILD
 
 # debloat mesa
 sed -i -e 's/r300,//'      \
+	-e 's/r600,//'         \
 	-e 's/svga,//'         \
 	-e 's/softpipe,//'     \
 	-e 's/llvmpipe,//'     \
