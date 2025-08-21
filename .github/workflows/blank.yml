@@ -142,7 +142,7 @@ jobs:
 
           export PATH="$PATH:/usr/bin/core_perl"
 
-          sudo sed -i -e 's|-O2|-Os|' \
+          sudo sed -i \
             -e 's|DEBUG_CFLAGS="-g"|DEBUG_CFLAGS="-g0"|' \
             -e 's|-fno-omit-frame-pointer|-fomit-frame-pointer|' \
             -e 's|-mno-omit-leaf-frame-pointer||' \
