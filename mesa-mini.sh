@@ -28,7 +28,10 @@ esac
 sed -i -e "s/x86_64/${ARCH}/" ./PKGBUILD
 
 # debloat mesa
-sed -i -e 's/r300,//'      \
+sed -i \
+	-e 's/vulkan-swrast//' \
+	-e 's/opencl-mesa//'   \
+	-e 's/r300,//'         \
 	-e 's/r600,//'         \
 	-e 's/svga,//'         \
 	-e 's/softpipe,//'     \
