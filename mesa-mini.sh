@@ -45,7 +45,7 @@ sed -i \
 	-e 's/gallium-rusticl=true/gallium-rusticl=false/' \
 	-e 's/valgrind=enabled/valgrind=disabled/'         \
 	-e 's/-D video-codecs=all/-D video-codecs=all -D amd-use-llvm=false -D draw-use-llvm=false/' \
-	-e 's/-g1/-g0 -Os/g' ./PKGBUILD
+	-e 's/-g1/-g0/g' ./PKGBUILD
 
 cat ./PKGBUILD
 
