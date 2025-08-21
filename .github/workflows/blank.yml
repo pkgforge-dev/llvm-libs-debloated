@@ -80,6 +80,14 @@ jobs:
           - arch: x86_64
             platform: linux/amd64
             runs-on: ubuntu-24.04
+            script: mesa-nano
+          - arch: aarch64
+            platform: linux/arm64
+            runs-on: ubuntu-24.04-arm
+            script: mesa-nano
+          - arch: x86_64
+            platform: linux/amd64
+            runs-on: ubuntu-24.04
             script: mangohud-pythonless
           - arch: aarch64
             platform: linux/arm64
@@ -244,6 +252,14 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: mesa-mini-x86_64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: mesa-nano-aarch64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: mesa-nano-x86_64
 
       - uses: actions/download-artifact@v4
         with:
