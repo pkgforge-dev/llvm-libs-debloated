@@ -4,6 +4,8 @@ set -x
 
 ARCH="$(uname -m)"
 
+sed -i -e 's|-O2|-Oz|' /etc/makepkg.conf
+
 _build_libxml2() (
 	rm -rf ./libxml2 || true
 	git clone https://gitlab.archlinux.org/archlinux/packaging/packages/libxml2.git libxml2

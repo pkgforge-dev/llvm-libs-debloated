@@ -4,6 +4,8 @@ set -e
 
 ARCH="$(uname -m)"
 
+sed -i -e 's|-O2|-Oz|' /etc/makepkg.conf
+
 git clone https://gitlab.archlinux.org/archlinux/packaging/packages/llvm llvm
 cd ./llvm
 

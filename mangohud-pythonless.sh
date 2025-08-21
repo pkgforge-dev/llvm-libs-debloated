@@ -4,6 +4,8 @@ set -ex
 
 ARCH="$(uname -m)"
 
+sed -i -e 's|-O2|-Oz|' /etc/makepkg.conf
+
 git clone https://github.com/VHSgunzo/mangohud-PKGBUILD.git ./mangohud-temp
 mv -v ./mangohud-temp/mangohud ./
 rm -rf ./mangohud-temp
