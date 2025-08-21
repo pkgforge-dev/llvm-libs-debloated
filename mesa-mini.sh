@@ -29,6 +29,7 @@ sed -i -e "s/x86_64/${ARCH}/" ./PKGBUILD
 
 # debloat mesa
 sed -i \
+	-e '/llvm-libs/d'      \
 	-e 's/vulkan-swrast//' \
 	-e 's/opencl-mesa//'   \
 	-e 's/r300,//'         \
