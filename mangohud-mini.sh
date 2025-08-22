@@ -34,7 +34,7 @@ cat ./PKGBUILD
 makepkg -fs --noconfirm --skippgpcheck
 ls -la
 rm -fv ./*-docs-*.pkg.tar.* ./*-debug-*.pkg.tar.*
-mv -v ./mangohud-*.pkg.tar."$EXT" ../mangohud-pythonless-"$ARCH".pkg.tar."$EXT"
+mv -v ./mangohud-*.pkg.tar."$EXT" ../mangohud-mini-"$ARCH".pkg.tar."$EXT"
 cd ..
 rm -rf ./mangohud
 echo "All done!"
