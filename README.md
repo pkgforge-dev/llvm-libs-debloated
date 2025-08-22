@@ -8,7 +8,7 @@ This repo makes modified versiones of some Archlinux packages, these are intende
 
 * `mesa-mini` and `vulkan-{radeon,intel,etc}-mini` **Mesa that does not link to `libLLVM.so`**, making any hardware accelerated app tiny as result.
 
-* `mesa-nano` and `vulkan-{radeon,intel,etc}-nano` similar to `mesa-mini`, built with -Oz which makes it ~30% smaller, note -Os can have a performance and even stability issue so do not use this package in apps like emulators where this is critical.
+* `mesa-nano` and `vulkan-{radeon,intel,etc}-nano` similar to `mesa-mini`, built with -Os which makes it ~30% smaller, note -Os can have a performance and even stability issue so do not use this package in apps like emulators where this is critical.
 
 * `llvm-libs-mini` and `llmv-libs-nano`, smaller versions of `libLLVM.so` which is a 130+ MiB library that Archlinux compiles with support for a lot of architectures (`arm`, `aarch64`, `risv`, etc), the mini version should be a drop in replacment that is unlikely to cause any issue, while the nano version only ships the host target (`x86_64` or `aarch64`) + `AMDGPU`.
 
