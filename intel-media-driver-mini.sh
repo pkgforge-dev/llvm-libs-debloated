@@ -18,15 +18,17 @@ case "$ARCH" in
 		exit 1
 		;;
 esac
-sed -i -e "s|x86_64|$ARCH|" ./PKGBUILD
+# build without debug info
+sed -i -e 's|-g1|-g0|' ./PKGBUILD
 
-# Build with MinSizeRel for smaller lib
+# debloat package, remove proprietary blob that makes the lib huge
 sed -i \
 	-e 's|-DINSTALL_DRIVER_SYSCONF=OFF|-DINSTALL_DRIVER_SYSCONF=OFF -DBUILD_TYPE=MinSizeRel -DENABLE_NONFREE_KERNELS=OFF|' \
 	./PKGBUILD
-cat ./PKGBUILD
 
+cat ./PKGBUILD
 makepkg -fs --noconfirm --skippgpcheck
+
 ls -la
 rm -fv ./*-docs-*.pkg.tar.* ./*-debug-*.pkg.tar.*
 mv ./intel-*.pkg.tar."$EXT" ../intel-media-driver-mini-"$ARCH".pkg.tar."$EXT"

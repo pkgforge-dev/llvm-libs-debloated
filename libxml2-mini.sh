@@ -17,20 +17,24 @@ case "$ARCH" in
 		EXT=xz
 		;;
 	*)
-		echo "Unsupported Arch: '$ARCH'"
+		>&2 echo "Unsupported Arch: '$ARCH'"
 		exit 1
 		;;
 esac
+# change arch for aarch64 support
 sed -i -e "s|x86_64|$ARCH|" ./PKGBUILD
+# build without debug info
+sed -i -e 's|-g1|-g0|' ./PKGBUILD
 
-# remove the line that enables icu support
+# debloat package, remove line that enables icu support
 sed -i \
 	-e '/--with-icu/d'               \
 	-e 's/icu=enabled/icu=disabled/' \
 	./PKGBUILD
-cat ./PKGBUILD
 
+cat ./PKGBUILD
 makepkg -fs --noconfirm --skippgpcheck
+
 ls -la
 rm -fv ./*-docs-*.pkg.tar.* ./*-debug-*.pkg.tar.*
 mv -v ./libxml2-*.pkg.tar."$EXT" ../libxml2-mini-"$ARCH".pkg.tar."$EXT"
