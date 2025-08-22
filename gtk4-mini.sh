@@ -21,6 +21,7 @@ case "${ARCH}" in
 	exit 1
 	;;
 esac
+sed -i -e "s/x86_64/$ARCH/" ./PKGBUILD
 
 sed -i \
 	-e '/broadway/d'        \
