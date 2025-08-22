@@ -56,6 +56,22 @@ jobs:
           - arch: x86_64
             platform: linux/amd64
             runs-on: ubuntu-24.04
+            script: gtk3-mini
+          - arch: aarch64
+            platform: linux/arm64
+            runs-on: ubuntu-24.04-arm
+            script: gtk3-mini
+          - arch: x86_64
+            platform: linux/amd64
+            runs-on: ubuntu-24.04
+            script: gtk4-mini
+          - arch: aarch64
+            platform: linux/arm64
+            runs-on: ubuntu-24.04-arm
+            script: gtk4-mini
+          - arch: x86_64
+            platform: linux/amd64
+            runs-on: ubuntu-24.04
             script: ffmpeg-mini
           - arch: aarch64
             platform: linux/arm64
@@ -228,6 +244,21 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: iculess-qt6base-x86_64
+      - uses: actions/download-artifact@v4
+        with:
+          name: gtk3-mini-aarch64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gtk3-mini-x86_64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gtk4-mini-aarch64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: gtk4-mini-x86_64
 
       - uses: actions/download-artifact@v4
         with:
