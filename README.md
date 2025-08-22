@@ -12,7 +12,7 @@ This repo makes modified versiones of Archlinux packages, these are intended for
 
 * `llvm-libs-mini` smaller version of `libLLVM.so` which is a 150+ MiB library, this version is reduced down to 99 MiB. 
 
-* `llvm-libs-nano` similar to mine but with the llvm targets limited (`x86_64` or `aarch64`) + `AMDGPU`, this reduces the size of the library to less than 70 MiB. Note this will cause issues if application dependso on more llvm targets
+* `llvm-libs-nano`, similar to `mini`, but with the llvm targets limited (`x86_64` or `aarch64`) + `AMDGPU`, this reduces the size of the library to less than 70 MiB. Note this will cause issues if application depends on more llvm targets
 
 * `qt6-base-mini` and `libxml2-mini`, remove 30 MiB libicudata lib dependency.
 
