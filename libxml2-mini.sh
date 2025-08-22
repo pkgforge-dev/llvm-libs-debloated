@@ -1,0 +1,41 @@
+#!/bin/sh
+
+set -ex
+
+ARCH="$(uname -m)"
+
+sed -i -e 's|-O2|-Oz|' /etc/makepkg.conf
+
+git clone https://gitlab.archlinux.org/archlinux/packaging/packages/libxml2.git libxml2
+cd ./libxml2
+
+case "$ARCH" in
+	x86_64)
+		EXT=zst
+		;;
+	aarch64)
+		EXT=xz
+		;;
+	*)
+		echo "Unsupported Arch: '$ARCH'"
+		exit 1
+		;;
+esac
+sed -i -e "s|x86_64|$ARCH|" ./PKGBUILD
+
+# remove the line that enables icu support
+sed -i \
+	-e '/--with-icu/d'               \
+	-e 's/icu=enabled/icu=disabled/' \
+	./PKGBUILD
+cat ./PKGBUILD
+
+makepkg -fs --noconfirm --skippgpcheck
+ls -la
+rm -fv ./*-docs-*.pkg.tar.* ./*-debug-*.pkg.tar.*
+mv -v ./libxml2-*.pkg.tar."$EXT" ../libxml2-mini-"$ARCH".pkg.tar."$EXT"
+cd ..
+rm -rf ./libxml2
+# keep older name to not break existing CIs
+cp -v ./libxml2-mini-"$ARCH".pkg.tar."$EXT" ./libxml2-iculess-"$ARCH".pkg.tar."$EXT"
+echo "All done!"
