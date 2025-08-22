@@ -9,13 +9,14 @@ sed -i -e 's|-O2|-Oz|' /etc/makepkg.conf
 case "$ARCH" in
 	x86_64)
 		EXT=zst
-		git clone https://gitlab.archlinux.org/archlinux/packaging/packages/ffmpeg.git ffmpeg
+		git clone --depth 1 https://gitlab.archlinux.org/archlinux/packaging/packages/ffmpeg.git ffmpeg
 		cd ./ffmpeg
 		;;
 	aarch64)
 		EXT=xz
 		git clone --depth 1 https://github.com/archlinuxarm/PKGBUILDs.git PKGBUILDs
 		mv ./PKGBUILDs/extra/ffmpeg ./
+		cd ./ffmpeg
 		;;
 	*)
 		>&2 echo "Unsupported Arch: '$ARCH'"
