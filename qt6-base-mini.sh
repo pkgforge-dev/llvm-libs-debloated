@@ -22,21 +22,22 @@ case "$ARCH" in
 		exit 1
 		;;
 esac
-sed -i -e "s/x86_64/$ARCH/" ./PKGBUILD
+sed -i -e "s|x86_64|$ARCH|" ./PKGBUILD
 
 # remove the line that enables icu support
 sed -i \
 	-e 's/-DCMAKE_BUILD_TYPE=RelWithDebInfo/-DCMAKE_BUILD_TYPE=MinSizeRel/' \
-	-e 's/-DFEATURE_journald=ON/-DFEATURE_journald=OFF/' \
-	-e '/-DFEATURE_libproxy=ON \\/a\    -DFEATURE_icu=OFF \\' ./PKGBUILD
+	-e 's/-DFEATURE_journald=ON/-DFEATURE_journald=OFF/'                    \
+	-e '/-DFEATURE_libproxy=ON \\/a\    -DFEATURE_icu=OFF \\'               \
+	./PKGBUILD
 cat ./PKGBUILD
 
 makepkg -fs --noconfirm --skippgpcheck
 ls -la
 rm -fv ./*-docs-*.pkg.tar.* ./*-debug-*.pkg.tar.*
-mv -v ./qt6-base-*.pkg.tar."$EXT" ../qt6-base-iculess-"$ARCH".pkg.tar."$EXT"
+mv -v ./qt6-base-*.pkg.tar."$EXT" ../qt6-base-mini-"$ARCH".pkg.tar."$EXT"
 cd ..
 rm -rf ./qt6-base
-# add make package with new name while keeping older name to not break existing CIs
-cp -v ./qt6-base-iculess-"$ARCH".pkg.tar."$EXT" ./qt6-base-mini-"$ARCH".pkg.tar."$EXT"
+# keep older name to not break existing CIs
+cp -v ./qt6-base-mini-"$ARCH".pkg.tar."$EXT" ./qt6-base-iculess-"$ARCH".pkg.tar."$EXT"
 echo "All done!"
