@@ -104,11 +104,11 @@ jobs:
           - arch: x86_64
             platform: linux/amd64
             runs-on: ubuntu-24.04
-            script: mangohud-pythonless
+            script: mangohud-mini
           - arch: aarch64
             platform: linux/arm64
             runs-on: ubuntu-24.04-arm
-            script: mangohud-pythonless
+            script: mangohud-mini
           - arch: x86_64
             platform: linux/amd64
             runs-on: ubuntu-24.04
@@ -294,11 +294,11 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: mangohud-pythonless-aarch64
+          name: mangohud-mini-aarch64
 
       - uses: actions/download-artifact@v4
         with:
-          name: mangohud-pythonless-x86_64
+          name: mangohud-mini-x86_64
 
       - uses: actions/download-artifact@v4
         with:
