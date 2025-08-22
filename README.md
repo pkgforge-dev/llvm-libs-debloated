@@ -18,7 +18,7 @@ This repo makes modified versiones of Archlinux packages, these are intended for
 
 * `ffmpeg-mini` which removes 20 MiB libx265.so dependency, also removes AV1 enconding support (decoding still works).
 
-* `opus-mine` I have no idea why Archlinux makes this lib 5 MiB when both ubuntu and alpine make it <500 KiB
+* `opus-mini` I have no idea why Archlinux makes this lib 5 MiB when both ubuntu and alpine make it <500 KiB
 
 # Projects using these packages
 
