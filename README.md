@@ -4,25 +4,25 @@
 
 ---
 
-This repo makes modified versiones of some Archlinux packages, these are intended for AppImages to reduce final size:
+This repo makes modified versiones of Archlinux packages, these are intended for AppImages to reduce final size, like:
 
-* `mesa-mini` and `vulkan-{radeon,intel,etc}-mini` **Mesa that does not link to `libLLVM.so`**, making any hardware accelerated app tiny as result.
+* `mesa-mini` and `vulkan-{radeon,intel,etc}-mini` remove linking to `libLLVM.so`, making any hardware accelerated app tiny as result.
 
-* `mesa-nano` and `vulkan-{radeon,intel,etc}-nano` similar to `mesa-mini`, built with -Os which makes it ~30% smaller, note -Os can have a performance and even stability issue so do not use this package in apps like emulators where this is critical.
+* `mesa-nano` and `vulkan-{radeon,intel,etc}-nano` similar to `mesa-mini`, built with -Os which makes it ~30% smaller. Note -Os can have a performance and even stability issue so do not use this package in apps like emulators where this is critical.
 
-* `llvm-libs-mini` and `llmv-libs-nano`, smaller versions of `libLLVM.so` which is a 130+ MiB library that Archlinux compiles with support for a lot of architectures (`arm`, `aarch64`, `risv`, etc), the mini version should be a drop in replacment that is unlikely to cause any issue, while the nano version only ships the host target (`x86_64` or `aarch64`) + `AMDGPU`.
+* `llvm-libs-mini` smaller version of `libLLVM.so` which is a 150+ MiB library, this version is reduced down to 99 MiB. 
 
-* iculess versions of `libxml2` and `qt6-base`, normally these packages depend on a 30 MiB libicudata lib that is rarely needed, using them gets rid of said library.
+* `llvm-libs-nano` similar to mine but with the llvm targets limited (`x86_64` or `aarch64`) + `AMDGPU`, this reduces the size of the library to less than 70 MiB. Note this will cause issues if application dependso on more llvm targets
 
-* `ffmpeg-mini` which mainly removes linking to libx265.so, which is a 20 MiB library that is rarely needed, using it gets rid of said library.
+* `qt6-base-mini` and `libxml2-mini`, remove 30 MiB libicudata lib dependency.
 
-* `opus-nano` I have no idea why Archlinux makes this lib 5 MiB when both ubuntu and alpine make it <500 KiB
+* `ffmpeg-mini` which removes 20 MiB libx265.so dependency, also removes AV1 enconding support (decoding still works).
+
+* `opus-mine` I have no idea why Archlinux makes this lib 5 MiB when both ubuntu and alpine make it <500 KiB
 
 # Projects using these packages
 
-* [Anylinux-AppImages](https://github.com/pkgforge-dev/Anylinux-AppImages)
-
-* [ghostty-appimage](https://github.com/psadi/ghostty-appimage)
+* [Anylinux-AppImages](https://github.com/pkgforge-dev/Anylinux-AppImages) - [ghostty](https://github.com/pkgforge-dev/ghostty-appimage), [citron](https://github.com/pkgforge-dev/Citron-appimage) and many more
 
 * [goverlay](https://github.com/benjamimgois/goverlay)
 
