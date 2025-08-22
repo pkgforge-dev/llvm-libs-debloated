@@ -4,7 +4,7 @@ set -ex
 
 ARCH="$(uname -m)"
 
-git clone https://gitlab.archlinux.org/archlinux/packaging/packages/opus.git ./opus
+git clone --depth 1 https://gitlab.archlinux.org/archlinux/packaging/packages/opus.git ./opus
 cd ./opus
 
 case "$ARCH" in

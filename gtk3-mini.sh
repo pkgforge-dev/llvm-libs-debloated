@@ -6,7 +6,7 @@ ARCH="$(uname -m)"
 
 sed -i -e 's|-O2|-Os|' /etc/makepkg.conf
 
-git clone https://gitlab.archlinux.org/archlinux/packaging/packages/gtk3.git gtk3
+git clone --depth 1 https://gitlab.archlinux.org/archlinux/packaging/packages/gtk3.git gtk3
 cd ./gtk3
 
 case "$ARCH" in

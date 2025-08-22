@@ -6,7 +6,7 @@ ARCH="$(uname -m)"
 
 sed -i -e 's|-O2|-Oz|' /etc/makepkg.conf
 
-git clone https://gitlab.archlinux.org/archlinux/packaging/packages/libxml2.git libxml2
+git clone --depth 1 https://gitlab.archlinux.org/archlinux/packaging/packages/libxml2.git libxml2
 cd ./libxml2
 
 case "$ARCH" in

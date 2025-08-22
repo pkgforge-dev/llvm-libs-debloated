@@ -6,7 +6,7 @@ ARCH="$(uname -m)"
 
 sed -i -e 's|-O2|-Os|' /etc/makepkg.conf
 
-git clone https://gitlab.archlinux.org/archlinux/packaging/packages/qt6-base qt6-base
+git clone --depth 1 https://gitlab.archlinux.org/archlinux/packaging/packages/qt6-base qt6-base
 cd ./qt6-base
 
 case "$ARCH" in

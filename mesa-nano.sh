@@ -9,7 +9,7 @@ sed -i -e 's|-O2|-Os|' /etc/makepkg.conf
 case "$ARCH" in
 	x86_64)
 		EXT=zst
-		git clone https://gitlab.archlinux.org/archlinux/packaging/packages/mesa.git ./mesa
+		git clone --depth 1 https://gitlab.archlinux.org/archlinux/packaging/packages/mesa.git ./mesa
 		cd ./mesa
 		;;
 	aarch64)
