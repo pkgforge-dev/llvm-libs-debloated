@@ -40,19 +40,19 @@ jobs:
           - arch: x86_64
             platform: linux/amd64
             runs-on: ubuntu-24.04
-            script: iculess-libxml2
+            script: libxml2-mini
           - arch: aarch64
             platform: linux/arm64
             runs-on: ubuntu-24.04-arm
-            script: iculess-libxml2
+            script: libxml2-mini
           - arch: x86_64
             platform: linux/amd64
             runs-on: ubuntu-24.04
-            script: iculess-qt6base
+            script: qt6-base-mini
           - arch: aarch64
             platform: linux/arm64
             runs-on: ubuntu-24.04-arm
-            script: iculess-qt6base
+            script: qt6-base-mini
           - arch: x86_64
             platform: linux/amd64
             runs-on: ubuntu-24.04
@@ -125,7 +125,7 @@ jobs:
           persist-credentials: false
           
       - name: set up ccache
-        if: ${{ matrix.script != 'iculess-qt6base' }}
+        if: ${{ matrix.script != 'qt6-base-mini' }}
         uses: actions/cache@v4
         with:
           path: ${{ env.CCACHE_DIR }}
@@ -134,7 +134,7 @@ jobs:
             ${{ runner.os }}-ccache-${{ matrix.script }}-${{ matrix.arch }}-
             
       - name: set up sccache
-        if: ${{ matrix.script == 'iculess-qt6base' }}
+        if: ${{ matrix.script == 'qt6-base-mini' }}
         uses: actions/cache@v4
         with:
           path: ~/.cache/sccache/
@@ -176,7 +176,7 @@ jobs:
 
           export CC=gcc
           export CXX=g++
-          if [ "${{ matrix.script }}" != 'iculess-qt6base' ]; then
+          if [ "${{ matrix.script }}" != 'qt6-base-mini' ]; then
             export CMAKE_C_COMPILER_LAUNCHER=ccache
             export CMAKE_CXX_COMPILER_LAUNCHER=ccache
           else
@@ -187,7 +187,7 @@ jobs:
           chmod +x ./*.sh
           sh ${{ matrix.script }}.sh
           
-          if [ "${{ matrix.script }}" != 'iculess-qt6base' ]; then
+          if [ "${{ matrix.script }}" != 'qt6-base-mini' ]; then
             ccache -s -v
           else
             sccache --show-stats
@@ -231,19 +231,19 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: iculess-libxml2-aarch64
+          name: libxml2-mini-aarch64
 
       - uses: actions/download-artifact@v4
         with:
-          name: iculess-libxml2-x86_64
+          name: libxml2-mini-x86_64
 
       - uses: actions/download-artifact@v4
         with:
-          name: iculess-qt6base-aarch64
+          name: qt6-base-mini-aarch64
 
       - uses: actions/download-artifact@v4
         with:
-          name: iculess-qt6base-x86_64
+          name: qt6-base-mini-x86_64
       - uses: actions/download-artifact@v4
         with:
           name: gtk3-mini-aarch64
