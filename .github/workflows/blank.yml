@@ -112,7 +112,7 @@ jobs:
           - arch: x86_64
             platform: linux/amd64
             runs-on: ubuntu-24.04
-            script: intel-media-mini
+            script: intel-media-driver-mini
     container:
       image: ghcr.io/pkgforge-dev/archlinux:latest
     env:
@@ -302,7 +302,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: intel-media-mini-x86_64
+          name: intel-media-driver-mini-x86_64
 
       - name: release
         uses: marvinpinto/action-automatic-releases@v1.2.1
