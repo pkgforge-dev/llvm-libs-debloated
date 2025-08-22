@@ -1,0 +1,37 @@
+#!/bin/sh
+
+set -ex
+
+ARCH="$(uname -m)"
+
+sed -i -e 's|-O2|-Os|' /etc/makepkg.conf
+
+git clone https://gitlab.archlinux.org/archlinux/packaging/packages/intel-media-driver.git ./intel-media-driver
+cd ./intel-media-driver
+
+case "$ARCH" in
+	x86_64)
+		EXT=zst
+		;;
+	*)
+		>&2 echo "Unsupported Arch: '$ARCH'"
+		exit 1
+		;;
+esac
+sed -i -e "s|x86_64|$ARCH|" ./PKGBUILD
+
+# Build with MinSizeRel for smaller lib
+sed -i \
+	-e 's|-DINSTALL_DRIVER_SYSCONF=OFF|-DINSTALL_DRIVER_SYSCONF=OFF -DBUILD_TYPE=MinSizeRel -DENABLE_NONFREE_KERNELS=OFF|' \
+	./PKGBUILD
+cat ./PKGBUILD
+
+makepkg -fs --noconfirm --skippgpcheck
+ls -la
+rm -fv ./*-docs-*.pkg.tar.* ./*-debug-*.pkg.tar.*
+mv ./intel-*.pkg.tar."$EXT" ../intel-media-driver-mini-"$ARCH".pkg.tar."$EXT"
+cd ..
+rm -rf ./intel-media-driver
+# keep older name to not break existing CIs
+cp -v ./intel-media-driver-mini-"$ARCH".pkg.tar."$EXT" ./intel-media-mini-"$ARCH".pkg.tar."$EXT"
+echo "All done!"
